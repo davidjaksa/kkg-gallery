@@ -1,0 +1,278 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Könyves Kálmán Gimnázium Galéria - Album nézet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Libre+Franklin:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#3c4851",
+                        "secondary-fixed-dim": "#bbc8d3",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#d7e4f0",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-container": "#696865",
+                        "surface-container": "#e5eeff",
+                        "primary-fixed-dim": "#ffb4a5",
+                        "inverse-primary": "#ffb4a5",
+                        "tertiary-fixed-dim": "#c8c6c2",
+                        "surface-variant": "#d3e4fe",
+                        "tertiary": "#51504d",
+                        "surface": "#f8f9ff",
+                        "outline": "#8b716c",
+                        "on-tertiary-container": "#ebe8e4",
+                        "surface-container-high": "#dce9ff",
+                        "primary-container": "#b4432e",
+                        "on-surface": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#474744",
+                        "on-secondary-container": "#5a6670",
+                        "secondary": "#54606a",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#57423d",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary-fixed-variant": "#862210",
+                        "background": "#f8f9ff",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#ffdad3",
+                        "secondary-fixed": "#d7e4f0",
+                        "on-background": "#0b1c30",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#1c1c19",
+                        "tertiary-fixed": "#e5e2de",
+                        "on-primary-container": "#ffe2dd",
+                        "on-secondary-fixed": "#111d25",
+                        "inverse-surface": "#213145",
+                        "primary": "#c4502d",
+                        "on-primary-fixed": "#3f0400",
+                        "outline-variant": "#dfc0ba",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#a73925"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "grid-cols-mobile": "4",
+                        "grid-cols-desktop": "12",
+                        "grid-cols-tablet": "8",
+                        "baseline": "4px",
+                        "stack-md": "16px",
+                        "margin-page": "40px",
+                        "gutter-gallery": "24px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Work Sans"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-md": ["Libre Franklin"],
+                        "headline-xl": ["Work Sans"],
+                        "headline-lg": ["Work Sans"],
+                        "headline-md": ["Work Sans"],
+                        "body-lg": ["Libre Franklin"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .brick-pattern {
+            background-color: #f8f9ff;
+            background-image: 
+                linear-gradient(335deg, rgba(255,255,255,0.7) 23px, transparent 23px),
+                linear-gradient(155deg, rgba(255,255,255,0.7) 23px, transparent 23px),
+                linear-gradient(335deg, rgba(255,255,255,0.7) 23px, transparent 23px),
+                linear-gradient(155deg, rgba(255,255,255,0.7) 23px, transparent 23px);
+            background-size: 58px 58px;
+            background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col relative font-headline-md">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 z-50"><div class="flex justify-between items-center w-full px-margin-page py-4 max-w-7xl mx-auto relative">
+<div class="absolute inset-0 brick-pattern pointer-events-none"></div>
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim relative z-10 flex items-center gap-2" style="font-family: 'Work Sans', sans-serif;">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+                KKG Galéria
+</div>
+<div class="flex items-center gap-4 relative z-10">
+<div class="relative hidden md:block">
+<input type="text" placeholder="Keresés..." class="bg-surface-container-low border-none rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-primary w-64 transition-all">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+</div>
+<button class="md:hidden text-on-surface hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-full font-medium scale-95 active:opacity-80 transition-transform flex items-center gap-2 shadow-sm hover:shadow-md" style="background-color: #c4502d; font-family: 'Work Sans', sans-serif;">
+<span class="material-symbols-outlined text-sm" data-icon="upload">upload</span>
+                    Feltöltés
+</button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-full font-medium scale-95 active:opacity-80 transition-transform flex items-center gap-2 shadow-sm hover:shadow-md" style="background-color: #c4502d; font-family: 'Work Sans', sans-serif;">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+                    Adminisztráció
+</button>
+</div>
+</div></header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-margin-page py-stack-lg flex flex-col md:flex-row gap-gutter-gallery">
+<!-- Sidebar Navigation (Mimicking the left menu in the image) -->
+<aside class="w-full md:w-64 flex-shrink-0 mb-8 md:mb-0">
+<div class="bg-surface-container-lowest rounded-xl border border-surface-container p-6 shadow-sm sticky top-24">
+<div class="mb-6">
+<div class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-headline-md text-sm uppercase tracking-wider mb-2 text-center shadow-sm">
+                        Hivatalos
+                    </div>
+</div>
+<nav class="flex flex-col gap-1"><!-- 2024-2025 Folder -->
+<div class="mt-4 mb-1 px-2 text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-2 font-headline-md">
+    <span class="material-symbols-outlined text-sm" data-icon="folder_open">folder_open</span>
+    2024-2025
+</div>
+<a class="py-2 px-4 border-l-2 border-surface-container ml-2 text-secondary hover:text-primary transition-colors flex items-center justify-between group" href="#">
+    Tanév programja (25-26)
+    <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity" data-icon="chevron_right">chevron_right</span>
+</a>
+
+<!-- 2023-2024 Folder -->
+<div class="mt-4 mb-1 px-2 text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-2 font-headline-md">
+    <span class="material-symbols-outlined text-sm" data-icon="folder_open">folder_open</span>
+    2023-2024
+</div>
+<a class="py-2 px-4 border-l-2 border-primary ml-2 text-primary font-medium flex items-center justify-between group bg-surface-container-low rounded-r" href="#">
+    Sportnap 2024
+    <span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="py-2 px-4 border-l-2 border-surface-container ml-2 text-secondary hover:text-primary transition-colors flex items-center justify-between group" href="#">
+    Tanáraink
+    <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity" data-icon="chevron_right">chevron_right</span>
+</a>
+
+<!-- Archívum Folder -->
+<div class="mt-4 mb-1 px-2 text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-2 font-headline-md">
+    <span class="material-symbols-outlined text-sm" data-icon="folder_open">folder_open</span>
+    Archívum
+</div>
+<a class="py-2 px-4 border-l-2 border-surface-container ml-2 text-secondary hover:text-primary transition-colors flex items-center justify-between group" href="#">
+    120 éves a Könyves!
+    <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="py-2 px-4 border-l-2 border-surface-container ml-2 text-secondary hover:text-primary transition-colors flex items-center justify-between group" href="#">
+    Dokumentumok
+    <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity" data-icon="chevron_right">chevron_right</span>
+</a></nav>
+</div>
+</aside>
+<!-- Gallery Grid Content -->
+<section class="flex-grow">
+<!-- Album Header -->
+<div class="mb-stack-lg pb-stack-md border-b border-outline-variant">
+<a class="inline-flex items-center text-secondary hover:text-primary text-sm mb-4 transition-colors" href="#">
+<span class="material-symbols-outlined mr-1 text-sm" data-icon="arrow_back">arrow_back</span>
+                    Vissza a 2024-es évhez
+                </a>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-2 font-bold">Sportnap 2024</h1>
+<div class="flex items-center gap-4 text-secondary text-label-sm tracking-wider font-headline-md">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span> 2024. május 15.</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="photo_library">photo_library</span> 42 fotó</span>
+</div>
+<p class="mt-4 text-on-surface-variant max-w-3xl font-headline-md">Képek az éves tavaszi sportfesztiválról. Diákok minden évfolyamból részt vettek az atlétikai, csapatsport és különféle fizikai kihívásokon.</p>
+</div>
+<!-- Bento Grid Gallery -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-gutter-gallery">
+<!-- Image 1 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A wide, dynamic photograph capturing a high school track and field event on a bright sunny day." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA75SChv2kqOoOGDNGxTdlSSZs1fUWuvSpbwf1kxwizIMFW42P5hFIA-9mv0kV5PoW8dFTTC9vWpj7e8i1sxbO0fuFkChkGxSmR0jtUeWY7QzMrU9M5Rhk06tzLdgdgFc0494HEQJik2qxOHaF8e5IOPYchk61casCJLJxs6qB5Bk2iP3XP09n6HhW2SpcMFK7KCuHumz-dO9Zk7l1rrU2JsxSGdAMdhXfrcdAZX8PvUs2Qx1X4UfWN">
+<div class="absolute inset-0 bg-tertiary/0 group-hover:bg-tertiary/40 transition-colors duration-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+<!-- Image 2 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A close-up photograph of a group of high school students cheering on the sidelines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE8sEfgnzb6zKzdbbiv-1CPeqCX0rWaJ0MIEQgSPcumIloTAK7Tl89u4ApQRj3GyFnBTIrIun6qT5M5eXqhKmvGMkQDxum3CNaK6UZaLkGYFmM7hF749jGliJWQ2KkawQ9C_wFK3iZ1N6Og5829ps_m-q0a5uY446-IZHk0YlmmnUt8KIQ4LBB10qOBj4I3Ioqng9neN9Up9SZl6ODHYFzJVwFQFuTJPzMp9YpCOr3M2SM1Q4189fH">
+<div class="absolute inset-0 bg-tertiary/0 group-hover:bg-tertiary/40 transition-colors duration-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+<!-- Image 3 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="An action shot of a high school basketball game played outdoors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmOixo9p4wZaeyUcSYjeIgRWNSCzBki2KdQbJ-vuYak9w-_BrLXfvCKVM13jOLl1Hhvn71zfjh6DwogxSmkUswLxGoGdE07ZmpJaW0jxxNjERJOXlLGW-4T_2adGfUBJM3I19N31aHLwtMuQViJg1rRtb47WcuAdZR_UzLXoH0SKzf42zJD8RUQ5B-oZ56uP93PGGhKwWoMNm2rz5ARkYBOa-Alvm1nEAfw7qVG531_U_YQnxCDCey">
+<div class="absolute inset-0 bg-tertiary/0 group-hover:bg-tertiary/40 transition-colors duration-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+<!-- Image 4 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A photograph of students playing tug-of-war on a grassy field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwYQeu5unp9s1BBVNcPOaR9pNYMaPfrrxFSH-vB93zHwLH1PI52Yr9K7QZ-ZAX6IHgtjbWci5DRattRSgYzKkrHmu9zbhiodXYZGL2AJPYUymEdugiCu0q0CzLEjROdp6mEf_kG1EAEy_BG7O8qFe_CVus3USUqvZKc1jz14ebZXnVW7JTHOoL-FuQbVPcd_FXIJEtpQvGKA7HgvSXv8h6XxDgU4VsCgsK5xQ-pUYtJgd_6qM_m2Jp">
+<div class="absolute inset-0 bg-tertiary/0 group-hover:bg-tertiary/40 transition-colors duration-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+<!-- Image 5 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A close-up shot of a shiny gold medal resting on a wooden podium." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMFu1pZwIpd6t-_JFS-cyEofyVIl_2-4uv7AQBtuWezJKe4QH5gqTNX1-bI9T1Bv48xO1oOGvRqM9P0fVO04OSFaQYpNuAVkhkFyEbSF2zayVhcC0WhNwEYbxcNdd8eqSRfGZARdHCXhes38Kq6WXG7oJKuD1aIE9QsAF_L2OCMBKivXSFMPrpWt84vJa22Oayx1rOEQMgyjHSnT6DOfgfrEwgac8oYyeM14EVwH-xq2R7lhYb-A9v">
+<div class="absolute inset-0 bg-tertiary/0 group-hover:bg-tertiary/40 transition-colors duration-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+<!-- Image 6 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A wide shot of a large group of students sitting on the grass." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQH1LWV6VcsjC7CrDazleqLahhEV7ADXi-CgdJoD0f2gfY6D2Rx1wkzxc4cJp7oIsZfhjOYHoRE26AptKrsRNhW_uH9MIinwcDhqxxxkfbC5yRmkQtWdWj0jjfjkB5aW8VD7Lp8uv5gzxAfwyQC-Muw-KLA3RQNnwB_ecgUhFIZYiJZ3M_ERDo9GzG773wh-4Q7IECpzHvEnB99A28nNDNg46PNWWpAWD-7ggqsdZJnMzACczlN2kP">
+<div class="absolute inset-0 bg-tertiary/0 group-hover:bg-tertiary/40 transition-colors duration-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+</div>
+<!-- Load More Action -->
+<div class="mt-stack-lg flex justify-center">
+<button class="border border-outline text-primary px-6 py-2 rounded-full font-medium hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+                    További fotók betöltése
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline w-full bottom-0 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-page py-stack-lg gap-stack-md max-w-7xl mx-auto">
+<div class="font-headline-md text-headline-md text-primary flex items-center gap-2"><span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span class="text-lg">KKG Galéria</span></div>
+<nav class="flex flex-wrap justify-center gap-6 text-body-md text-on-surface-variant dark:text-secondary-fixed-dim">
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all opacity-90 hover:opacity-100" href="#">Kapcsolat</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all opacity-90 hover:opacity-100" href="#">Adatvédelmi irányelvek</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all opacity-90 hover:opacity-100" href="#">Felhasználási feltételek</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all opacity-90 hover:opacity-100" href="#">Iskolatérkép</a>
+</nav>
+<div class="text-on-surface-variant font-label-sm text-label-sm">
+                © 2024 Könyves Kálmán Gimnázium. Minden jog fenntartva.
+            </div>
+</div>
+</footer>
+
+
+</body></html>
