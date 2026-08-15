@@ -46,6 +46,7 @@ next-env.d.ts
 # app data
 /data
 /data/uploads
+/prisma/gallery.empty.db
 
 # imported gallery originals
 /photos

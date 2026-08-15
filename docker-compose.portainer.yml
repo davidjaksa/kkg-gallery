@@ -5,8 +5,9 @@ services:
       - "127.0.0.1:3000:3000"
     env_file:
       - stack.env
+    init: true
     environment:
-      DATABASE_URL: file:../data/gallery.db
+      DATABASE_URL: file:/app/data/gallery.db?connection_limit=1
     mem_limit: 1g
     pids_limit: 256
     cap_drop:
