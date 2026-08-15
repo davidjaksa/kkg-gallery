@@ -44,7 +44,6 @@ The app binds to `127.0.0.1:3000` only. Named volumes store the SQLite database 
 ## Project notes
 
 - Photos live in `data/uploads/` (`originals`, `display`, `thumbs`, `covers`) and are gitignored.
-- `stitch_scholastic_photo_portal/` is design reference only and is not served.
 - School years are stored as `2026-27` (start year input formats the label/slug automatically).
 - `photos/` is a local archive dump (gitignored). Import it with:
 
