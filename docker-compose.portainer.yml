@@ -1,0 +1,23 @@
+services:
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    env_file:
+      - stack.env
+    environment:
+      DATABASE_URL: file:../data/gallery.db
+    mem_limit: 1g
+    pids_limit: 256
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - kkg-db:/app/data
+      - kkg-uploads:/app/data/uploads
+    restart: unless-stopped
+
+volumes:
+  kkg-db:
+  kkg-uploads:
