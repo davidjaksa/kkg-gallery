@@ -31,6 +31,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/sharp ./node_modules/sharp
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@img ./node_modules/@img
 RUN mkdir -p data/uploads/originals data/uploads/thumbs data/uploads/display data/uploads/covers \
   && chown -R nextjs:nodejs /app/data
 COPY --from=builder --chown=nextjs:nodejs /app/prisma/gallery.empty.db /app/data/gallery.db

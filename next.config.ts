@@ -29,6 +29,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   output: "standalone",
   serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
+  outputFileTracingIncludes: {
+    "/*": ["./node_modules/sharp/**/*", "./node_modules/@img/**/*"],
+  },
   async redirects() {
     return [
       { source: "/upload", destination: "/admin", permanent: true },
