@@ -26,15 +26,13 @@ Open [http://localhost:3000](http://localhost:3000). The admin account is create
 
 ## Docker
 
-Portainer loads secrets from `stack.env` (generated from the stack environment UI). Local Compose can use the same file:
+Compose loads `.env` then `stack.env` if those files exist (later file wins). Copy `.env.example` to `.env` locally. Portainer writes `stack.env` from the stack environment UI. Neither `.env` nor `stack.env` is in the repo.
 
 ```bash
-cp .env.example stack.env
-# edit secrets and AUTH_URL
+cp .env.example .env
+# set AUTH_SECRET, AUTH_URL, ADMIN_EMAIL, ADMIN_PASSWORD
 docker compose up --build
 ```
-
-`npm run dev` still uses `.env` (`cp .env.example .env`).
 
 The app binds to `127.0.0.1:3000` only. Named volumes store the SQLite database and uploaded files.
 
