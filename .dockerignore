@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+data
+stitch_scholastic_photo_portal
+*.md
+.env
+.env.*
+!.env.example

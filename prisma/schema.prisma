@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  EDITOR
+  ADMIN
+}
+
+enum PhotoStatus {
+  PROCESSING
+  READY
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(EDITOR)
+  createdAt    DateTime @default(now())
+  albums       Album[]
+  photos       Photo[]
+}
+
+model Year {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  startYear Int?     @unique
+  label     String?
+  isCustom  Boolean  @default(false)
+  sortOrder Int      @default(0)
+  coverPath String?
+  createdAt DateTime @default(now())
+  albums    Album[]
+}
+
+model Album {
+  id          String    @id @default(cuid())
+  slug        String
+  title       String
+  description String?
+  eventDate   DateTime?
+  published   Boolean   @default(false)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  yearId      String
+  year        Year      @relation(fields: [yearId], references: [id])
+  createdById String
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  photos      Photo[]
+
+  @@unique([yearId, slug])
+}
+
+model Photo {
+  id           String      @id @default(cuid())
+  filename     String
+  originalPath String
+  displayPath  String
+  thumbPath    String
+  contentHash  String?
+  status       PhotoStatus @default(PROCESSING)
+  createdAt    DateTime    @default(now())
+  albumId      String
+  album        Album       @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  uploadedById String
+  uploadedBy   User        @relation(fields: [uploadedById], references: [id])
+
+  @@index([contentHash])
+}
