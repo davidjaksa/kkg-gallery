@@ -26,11 +26,15 @@ Open [http://localhost:3000](http://localhost:3000). The admin account is create
 
 ## Docker
 
+Local Compose still uses `.env`. Portainer (and other stack UIs) inject the same keys via `stack.env`.
+
 ```bash
 cp .env.example .env
 # edit secrets and AUTH_URL
 docker compose up --build
 ```
+
+For a Portainer stack, add the same variables in the stack environment UI (or as `stack.env` next to the compose file). Compose loads `.env` and `stack.env` when present; neither file is required.
 
 The app binds to `127.0.0.1:3000` only. Named volumes store the SQLite database and uploaded files.
 

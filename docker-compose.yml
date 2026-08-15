@@ -4,7 +4,10 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     env_file:
-      - .env
+      - path: .env
+        required: false
+      - path: stack.env
+        required: false
     environment:
       DATABASE_URL: file:../data/gallery.db
     mem_limit: 1g

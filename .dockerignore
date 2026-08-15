@@ -7,3 +7,4 @@ stitch_scholastic_photo_portal
 .env
 .env.*
 !.env.example
+stack.env
