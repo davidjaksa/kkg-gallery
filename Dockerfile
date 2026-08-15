@@ -16,6 +16,13 @@ ENV AUTH_SECRET="build-placeholder-secret-at-least-32-chars"
 RUN npx prisma generate
 RUN npm run build
 
+# Prisma CLI needs its full dependency tree (effect, c12, …), not only the prisma/ folders.
+FROM node:20-bookworm-slim AS prisma-cli
+WORKDIR /cli
+COPY package.json ./
+RUN node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync('package.json','utf8')); fs.writeFileSync('package.json', JSON.stringify({name:'prisma-cli',private:true,dependencies:{prisma:p.devDependencies.prisma,'@prisma/client':p.dependencies['@prisma/client']}}))" \
+  && npm install --omit=dev
+
 FROM node:20-bookworm-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
@@ -27,8 +34,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=prisma-cli --chown=nextjs:nodejs /cli/node_modules ./node_modules
 RUN mkdir -p data/uploads/originals data/uploads/thumbs data/uploads/display data/uploads/covers \
   && chown -R nextjs:nodejs /app/data
 USER nextjs
