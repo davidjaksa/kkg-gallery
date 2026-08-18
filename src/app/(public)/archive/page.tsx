@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ArchiveGrid } from "@/components/archive-grid";
-import { getAllPublicYears, yearStats } from "@/lib/queries";
-import { yearDisplayName } from "@/lib/years";
+import { albumStats, getAllPublicRootAlbums } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -10,10 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function ArchivePage() {
-  const years = await getAllPublicYears();
-  const items = years.map((year) => {
-    const stats = yearStats(year);
-    return { slug: year.slug, name: yearDisplayName(year), ...stats };
+  const { albums, roots } = await getAllPublicRootAlbums();
+  const items = roots.map((album) => {
+    const stats = albumStats(album, albums);
+    return { slugs: [album.slug], name: album.title, ...stats };
   });
 
   return (

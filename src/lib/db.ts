@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const PRISMA_CLIENT_STAMP = "year-sortorder-1";
+const PRISMA_CLIENT_STAMP = "nested-albums-1";
 
 const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;

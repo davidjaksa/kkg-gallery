@@ -1,14 +1,14 @@
 import { YearCard } from "@/components/year-card";
 
-type YearItem = {
-  slug: string;
+type AlbumItem = {
+  slugs: string[];
   name: string;
   albumCount: number;
   photoCount: number;
   cover: string | null;
 };
 
-export function ArchiveGrid({ years }: { years: YearItem[] }) {
+export function ArchiveGrid({ years }: { years: AlbumItem[] }) {
   return (
     <>
       <div className="mb-12">
@@ -18,11 +18,11 @@ export function ArchiveGrid({ years }: { years: YearItem[] }) {
         </p>
       </div>
       {years.length === 0 ? (
-        <p className="font-body-md text-on-surface-variant">Még nincsenek közzétett tanévek.</p>
+        <p className="font-body-md text-on-surface-variant">Még nincsenek közzétett albumok.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter-gallery">
           {years.map((year) => (
-            <YearCard key={year.slug} {...year} />
+            <YearCard key={year.slugs.join("/")} {...year} />
           ))}
         </div>
       )}

@@ -27,18 +27,6 @@ model User {
   photos       Photo[]
 }
 
-model Year {
-  id        String   @id @default(cuid())
-  slug      String   @unique
-  startYear Int?     @unique
-  label     String?
-  isCustom  Boolean  @default(false)
-  sortOrder Int      @default(0)
-  coverPath String?
-  createdAt DateTime @default(now())
-  albums    Album[]
-}
-
 model Album {
   id          String    @id @default(cuid())
   slug        String
@@ -47,15 +35,19 @@ model Album {
   eventDate   DateTime?
   published   Boolean   @default(false)
   sortOrder   Int       @default(0)
+  coverPath   String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  yearId      String
-  year        Year      @relation(fields: [yearId], references: [id])
+  parentId    String?
+  parentKey   String    @default("")
+  parent      Album?    @relation("AlbumTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children    Album[]   @relation("AlbumTree")
   createdById String
   createdBy   User      @relation(fields: [createdById], references: [id])
   photos      Photo[]
 
-  @@unique([yearId, slug])
+  @@unique([parentKey, slug])
+  @@index([parentId])
 }
 
 model Photo {
@@ -73,4 +65,9 @@ model Photo {
   uploadedBy   User        @relation(fields: [uploadedById], references: [id])
 
   @@index([contentHash])
+}
+
+model Setting {
+  key   String @id
+  value String
 }

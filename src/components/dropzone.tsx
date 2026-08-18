@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { Icon } from "@/components/icon";
 
-type AlbumOption = { id: string; title: string; yearSlug: string };
+type AlbumOption = { id: string; title: string; pathLabel: string };
 
 export function Dropzone({ albums }: { albums: AlbumOption[] }) {
   const [albumId, setAlbumId] = useState("");
@@ -56,7 +56,7 @@ export function Dropzone({ albums }: { albums: AlbumOption[] }) {
           </option>
           {albums.map((album) => (
             <option key={album.id} value={album.id}>
-              {album.yearSlug} — {album.title}
+              {album.pathLabel} — {album.title}
             </option>
           ))}
         </select>

@@ -7,6 +7,7 @@ import { ensureUploadDirs, resolveUploadPath } from "@/lib/paths";
 import { ensureAdmin } from "@/lib/seed";
 import { processCover, processMovedPhoto } from "@/lib/sharp";
 import { slugifyEnglish, slugifyAlbum } from "@/lib/slug";
+import { parentKeyOf } from "@/lib/albums";
 import { formatSchoolYear } from "@/lib/years";
 
 const PHOTOS_DIR = path.join(process.cwd(), "photos");
@@ -234,20 +235,14 @@ async function pool<T>(items: T[], concurrency: number, fn: (item: T, index: num
   await Promise.all(Array.from({ length: size }, () => worker()));
 }
 
-async function assignYearSortOrder() {
-  const years = await prisma.year.findMany({
-    orderBy: [{ sortOrder: "asc" }, { startYear: "desc" }],
-    select: { id: true, isCustom: true, startYear: true, label: true, slug: true },
-  });
-  years.sort((a, b) => {
-    if (a.isCustom !== b.isCustom) return a.isCustom ? -1 : 1;
-    if (a.isCustom) {
-      return (a.label ?? a.slug).localeCompare(b.label ?? b.slug, "hu");
-    }
-    return (b.startYear ?? 0) - (a.startYear ?? 0);
+async function assignRootSortOrder() {
+  const roots = await prisma.album.findMany({
+    where: { parentKey: "" },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+    select: { id: true },
   });
   await prisma.$transaction(
-    years.map((year, sortOrder) => prisma.year.update({ where: { id: year.id }, data: { sortOrder } })),
+    roots.map((album, sortOrder) => prisma.album.update({ where: { id: album.id }, data: { sortOrder } })),
   );
 }
 
@@ -356,29 +351,33 @@ async function main() {
   }
 
   for (const year of years) {
-    const existingYear = await prisma.year.findUnique({ where: { slug: year.slug } });
+    const existingRoot = await prisma.album.findFirst({
+      where: { parentKey: "", slug: year.slug },
+    });
     const yearRow =
-      existingYear ??
-      (await prisma.year.create({
+      existingRoot ??
+      (await prisma.album.create({
         data: {
           slug: year.slug,
-          startYear: year.startYear,
-          label: year.label,
-          isCustom: year.isCustom,
+          title: year.label ?? year.slug,
+          published: publish,
+          parentId: null,
+          parentKey: "",
+          createdById: admin.id,
         },
       }));
-    if (!existingYear) stats.years += 1;
+    if (!existingRoot) stats.years += 1;
 
     let albumSort = (
       await prisma.album.aggregate({
-        where: { yearId: yearRow.id },
+        where: { parentKey: parentKeyOf(yearRow.id) },
         _max: { sortOrder: true },
       })
     )._max.sortOrder;
     if (albumSort == null) albumSort = -1;
 
     const usedAlbumSlugs = new Set(
-      (await prisma.album.findMany({ where: { yearId: yearRow.id }, select: { slug: true } })).map(
+      (await prisma.album.findMany({ where: { parentKey: parentKeyOf(yearRow.id) }, select: { slug: true } })).map(
         (album) => album.slug,
       ),
     );
@@ -387,7 +386,7 @@ async function main() {
 
     for (const album of year.albums) {
       let albumRow = await prisma.album.findFirst({
-        where: { yearId: yearRow.id, title: album.title },
+        where: { parentId: yearRow.id, title: album.title },
       });
       if (!albumRow) {
         const slug = uniqueAlbumSlug(album.title, usedAlbumSlugs, year.slug);
@@ -398,7 +397,8 @@ async function main() {
             title: album.title,
             published: publish,
             sortOrder: albumSort,
-            yearId: yearRow.id,
+            parentId: yearRow.id,
+            parentKey: parentKeyOf(yearRow.id),
             createdById: admin.id,
           },
         });
@@ -476,11 +476,11 @@ async function main() {
     if (!yearRow.coverPath && firstPhotoPath) {
       const buffer = await fs.readFile(resolveUploadPath(firstPhotoPath));
       const coverPath = await processCover({ id: yearRow.id, buffer });
-      await prisma.year.update({ where: { id: yearRow.id }, data: { coverPath } });
+      await prisma.album.update({ where: { id: yearRow.id }, data: { coverPath } });
     }
   }
 
-  await assignYearSortOrder();
+  await assignRootSortOrder();
   await pruneEmptyDirs(PHOTOS_DIR);
 
   console.log(

@@ -250,13 +250,14 @@ const TITLES: Record<string, string> = {
 
 async function main() {
   const albums = await prisma.album.findMany({
-    include: { year: { select: { slug: true } } },
+    include: { parent: { select: { slug: true } } },
   });
 
   let changed = 0;
   let missing = 0;
   for (const album of albums) {
-    const key = `${album.year.slug}/${album.slug}`;
+    if (!album.parent?.slug) continue;
+    const key = `${album.parent.slug}/${album.slug}`;
     const title = TITLES[key];
     if (!title) {
       missing += 1;

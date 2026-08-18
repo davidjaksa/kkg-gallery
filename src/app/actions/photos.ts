@@ -3,15 +3,16 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { deletePhotoFilesIfUnshared } from "@/lib/photo-files";
+import { indexAlbums, slugPathOf } from "@/lib/albums";
 import { canManageAlbum, requireStaff } from "@/lib/session";
-import { albumPath, yearPath } from "@/lib/routes";
+import { albumPath } from "@/lib/routes";
 
 export async function deletePhoto(formData: FormData): Promise<{ error?: string }> {
   const user = await requireStaff();
   const id = String(formData.get("id") ?? "");
   const photo = await prisma.photo.findUnique({
     where: { id },
-    include: { album: { include: { year: true } } },
+    include: { album: true },
   });
   if (!photo) return { error: "A fénykép nem található." };
   if (!canManageAlbum(user, photo.album)) {
@@ -21,8 +22,9 @@ export async function deletePhoto(formData: FormData): Promise<{ error?: string 
   await deletePhotoFilesIfUnshared(photo);
   await prisma.photo.delete({ where: { id } });
 
-  revalidatePath(albumPath(photo.album.year.slug, photo.album.slug));
-  revalidatePath(yearPath(photo.album.year.slug));
+  const albums = await prisma.album.findMany({ select: { id: true, slug: true, parentId: true } });
+  const { byId } = indexAlbums(albums);
+  revalidatePath(albumPath(slugPathOf(photo.albumId, byId)));
   revalidatePath("/admin");
   return {};
 }

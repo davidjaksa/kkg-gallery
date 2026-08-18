@@ -2,17 +2,17 @@ import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { formatCount } from "@/lib/dates";
 import { mediaUrl } from "@/lib/media";
-import { yearPath } from "@/lib/routes";
+import { albumPath } from "@/lib/routes";
 import { YEAR_SLUG_PATTERN } from "@/lib/years";
 
 export function YearCard({
-  slug,
+  slugs,
   name,
   albumCount,
   photoCount,
   cover,
 }: {
-  slug: string;
+  slugs: string[];
   name: string;
   albumCount: number;
   photoCount: number;
@@ -22,7 +22,7 @@ export function YearCard({
   const schoolYear = YEAR_SLUG_PATTERN.test(name);
   return (
     <Link
-      href={yearPath(slug)}
+      href={albumPath(slugs)}
       className="group flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover-lift relative"
     >
       <div className="relative h-48 w-full bg-surface-container-low overflow-hidden">

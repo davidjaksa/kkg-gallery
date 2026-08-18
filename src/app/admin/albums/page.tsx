@@ -1,36 +1,19 @@
 import { AlbumManager } from "@/components/album-manager";
 import { prisma } from "@/lib/db";
 import { requireStaff } from "@/lib/session";
-import { yearDisplayName } from "@/lib/years";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminAlbumsPage() {
   const user = await requireStaff();
-  const years = await prisma.year.findMany({
-    orderBy: [{ sortOrder: "asc" }, { startYear: "desc" }],
-  });
   const albums = await prisma.album.findMany({
-    orderBy: [
-      { year: { sortOrder: "asc" } },
-      { year: { startYear: "desc" } },
-      { sortOrder: "asc" },
-    ],
-    include: {
-      year: true,
-      _count: { select: { photos: true } },
-    },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+    include: { _count: { select: { photos: true, children: true } } },
   });
-
   const visible = user.role === "ADMIN" ? albums : albums.filter((album) => album.createdById === user.id);
 
   return (
     <AlbumManager
-      years={years.map((year) => ({
-        id: year.id,
-        name: yearDisplayName(year),
-        slug: year.slug,
-      }))}
       albums={visible.map((album) => ({
         id: album.id,
         slug: album.slug,
@@ -38,11 +21,13 @@ export default async function AdminAlbumsPage() {
         description: album.description,
         eventDate: album.eventDate?.toISOString() ?? null,
         published: album.published,
-        yearId: album.yearId,
-        yearName: yearDisplayName(album.year),
-        yearSlug: album.year.slug,
+        parentId: album.parentId,
+        sortOrder: album.sortOrder,
         photoCount: album._count.photos,
+        childCount: album._count.children,
         canManage: user.role === "ADMIN" || album.createdById === user.id,
+        coverPath: album.coverPath,
+        createdById: album.createdById,
       }))}
     />
   );

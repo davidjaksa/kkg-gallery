@@ -10,7 +10,7 @@ export default async function LegacyAlbumRedirect({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const album = await getAlbumByLegacySlug(slug);
-  if (!album) notFound();
-  permanentRedirect(albumPath(album.year.slug, album.slug));
+  const match = await getAlbumByLegacySlug(slug);
+  if (!match) notFound();
+  permanentRedirect(albumPath(match.slugs));
 }

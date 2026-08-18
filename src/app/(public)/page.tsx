@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { YearCard } from "@/components/year-card";
-import { getLatestYears, yearStats } from "@/lib/queries";
-import { yearDisplayName } from "@/lib/years";
+import { getHomepageAlbums, albumStats } from "@/lib/queries";
+import { getHomepageAlbumCount } from "@/lib/settings";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const years = await getLatestYears(3);
+  const count = await getHomepageAlbumCount();
+  const { albums, roots } = await getHomepageAlbums(count);
 
   return (
     <main>
@@ -37,21 +38,21 @@ export default async function HomePage() {
       <section className="py-12 md:py-20 bg-surface-container-lowest">
         <div className="max-w-7xl mx-auto px-margin-page">
           <div className="flex justify-between items-end mb-stack-lg">
-            <h2 className="font-headline-lg text-headline-lg text-on-surface">Tanévek</h2>
+            <h2 className="font-headline-lg text-headline-lg text-on-surface">Albumok</h2>
           </div>
-          {years.length === 0 ? (
+          {roots.length === 0 ? (
             <p className="font-body-md text-on-surface-variant">
-              Még nincsenek közzétett tanévek. Jelentkezzen be a feltöltéshez.
+              Még nincsenek közzétett albumok. Jelentkezzen be a feltöltéshez.
             </p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter-gallery">
-              {years.map((year) => {
-                const stats = yearStats(year);
+              {roots.map((album) => {
+                const stats = albumStats(album, albums);
                 return (
                   <YearCard
-                    key={year.id}
-                    slug={year.slug}
-                    name={yearDisplayName(year)}
+                    key={album.id}
+                    slugs={[album.slug]}
+                    name={album.title}
                     albumCount={stats.albumCount}
                     photoCount={stats.photoCount}
                     cover={stats.cover}

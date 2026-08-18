@@ -69,14 +69,32 @@ export async function GET(request: Request, context: { params: Promise<{ path: s
   let cachePublic = false;
 
   if (relative.startsWith("covers/")) {
-    const year = await prisma.year.findFirst({
-      where: { coverPath: relative },
-      include: { _count: { select: { albums: { where: { published: true } } } } },
-    });
-    if (!year) return notFound();
-    const published = year._count.albums > 0;
-    if (!published && !user) return notFound();
-    cachePublic = published;
+    const coverAlbum = await prisma.album.findFirst({ where: { coverPath: relative } });
+    if (!coverAlbum) return notFound();
+    const published = coverAlbum.published;
+    if (!published && !user) {
+      const descendants = await prisma.album.findMany({ select: { id: true, parentId: true, published: true } });
+      const kids = new Map<string | null, typeof descendants>();
+      for (const row of descendants) {
+        const list = kids.get(row.parentId) ?? [];
+        list.push(row);
+        kids.set(row.parentId, list);
+      }
+      const stack = [...(kids.get(coverAlbum.id) ?? [])];
+      let reachable = false;
+      while (stack.length) {
+        const node = stack.pop()!;
+        if (node.published) {
+          reachable = true;
+          break;
+        }
+        stack.push(...(kids.get(node.id) ?? []));
+      }
+      if (!reachable) return notFound();
+      cachePublic = true;
+    } else {
+      cachePublic = published;
+    }
   } else {
     const photo = await prisma.photo.findFirst({
       where: {

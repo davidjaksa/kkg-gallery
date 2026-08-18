@@ -9,7 +9,6 @@ import type { SessionUser } from "@/lib/session";
 
 const NAV = [
   { href: "/admin", label: "Vezérlőpult", icon: "dashboard", exact: true },
-  { href: "/admin/years", label: "Évek kezelése", icon: "calendar_today" },
   { href: "/admin/albums", label: "Albumok", icon: "photo_album" },
   { href: "/admin/account", label: "Fiók", icon: "lock" },
   { href: "/admin/users", label: "Felhasználók", icon: "group", adminOnly: true },

@@ -32,6 +32,9 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./node_modules/sharp/**/*", "./node_modules/@img/**/*"],
   },
+  outputFileTracingExcludes: {
+    "*": ["./data/**", "./photos/**"],
+  },
   async redirects() {
     return [
       { source: "/upload", destination: "/admin", permanent: true },

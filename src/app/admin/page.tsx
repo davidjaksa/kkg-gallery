@@ -4,9 +4,9 @@ import { Icon } from "@/components/icon";
 import { StorageMeter } from "@/components/recent-uploads";
 import { formatBytes } from "@/lib/dates";
 import { prisma } from "@/lib/db";
+import { indexAlbums, slugPathOf } from "@/lib/albums";
 import { requireStaff } from "@/lib/session";
 import { getStorageUsage } from "@/lib/storage";
-import { yearDisplayName } from "@/lib/years";
 
 export const dynamic = "force-dynamic";
 
@@ -14,9 +14,10 @@ export default async function AdminDashboardPage() {
   const user = await requireStaff();
   const albums = await prisma.album.findMany({
     where: user.role === "ADMIN" ? undefined : { createdById: user.id },
-    orderBy: { createdAt: "desc" },
-    include: { year: true },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+    select: { id: true, title: true, slug: true, parentId: true },
   });
+  const { byId } = indexAlbums(albums);
   const usage = getStorageUsage();
 
   return (
@@ -29,7 +30,7 @@ export default async function AdminDashboardPage() {
               albums={albums.map((album) => ({
                 id: album.id,
                 title: album.title,
-                yearSlug: yearDisplayName(album.year),
+                pathLabel: slugPathOf(album.id, byId).join(" / "),
               }))}
             />
           </div>
@@ -42,14 +43,7 @@ export default async function AdminDashboardPage() {
                   className="w-full flex items-center gap-3 p-3 rounded hover:bg-surface-container-low transition-colors text-left border border-outline-variant"
                 >
                   <Icon name="create_new_folder" className="text-primary" />
-                  <span className="font-body-md text-on-surface font-medium">Új Album</span>
-                </Link>
-                <Link
-                  href="/admin/years"
-                  className="w-full flex items-center gap-3 p-3 rounded hover:bg-surface-container-low transition-colors text-left border border-outline-variant"
-                >
-                  <Icon name="calendar_today" className="text-secondary" />
-                  <span className="font-body-md text-on-surface font-medium">Évek kezelése</span>
+                  <span className="font-body-md text-on-surface font-medium">Albumok</span>
                 </Link>
               </div>
             </div>

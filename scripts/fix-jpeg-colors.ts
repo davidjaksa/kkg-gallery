@@ -10,7 +10,7 @@ async function main() {
   const yearSlug = argValue("year") ?? "2014-15";
   const albumSlug = argValue("album") ?? "bolondb";
   const album = await prisma.album.findFirst({
-    where: { slug: albumSlug, year: { slug: yearSlug } },
+    where: { slug: albumSlug, parent: { slug: yearSlug } },
     include: {
       photos: {
         select: {

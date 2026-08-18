@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { AlbumCard } from "@/components/album-card";
 import { YearCard } from "@/components/year-card";
-import { searchPublic, yearStats } from "@/lib/queries";
-import { yearDisplayName } from "@/lib/years";
+import { albumStats, searchPublic, getAllPublicRootAlbums } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +16,11 @@ export default async function SearchPage({
 }) {
   const { q = "" } = await searchParams;
   const query = q.trim();
-  const { years, albums } = await searchPublic(query);
+  const { albums } = await searchPublic(query);
+  const graph = await getAllPublicRootAlbums();
+
+  const roots = albums.filter((album) => !album.parentId);
+  const nested = albums.filter((album) => album.parentId);
 
   return (
     <main className="flex-grow px-margin-page py-12 max-w-7xl mx-auto w-full space-y-12">
@@ -27,7 +30,7 @@ export default async function SearchPage({
           <input
             name="q"
             defaultValue={query}
-            placeholder="Keresés év, albumcím vagy leírás szerint..."
+            placeholder="Keresés albumcím vagy leírás szerint..."
             className="w-full bg-surface border border-outline-variant rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary font-body-md text-base"
           />
         </form>
@@ -35,21 +38,21 @@ export default async function SearchPage({
 
       {!query ? (
         <p className="font-body-md text-on-surface-variant">Adjon meg egy keresőkifejezést.</p>
-      ) : years.length === 0 && albums.length === 0 ? (
+      ) : albums.length === 0 ? (
         <p className="font-body-md text-on-surface-variant">Nincs találat a(z) „{query}” kifejezésre.</p>
       ) : (
         <>
-          {years.length > 0 && (
+          {roots.length > 0 && (
             <section>
-              <h2 className="font-headline-lg text-headline-lg mb-6">Tanévek</h2>
+              <h2 className="font-headline-lg text-headline-lg mb-6">Főalbumok</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter-gallery">
-                {years.map((year) => {
-                  const stats = yearStats(year);
+                {roots.map((album) => {
+                  const stats = albumStats(album, graph.albums);
                   return (
                     <YearCard
-                      key={year.id}
-                      slug={year.slug}
-                      name={yearDisplayName(year)}
+                      key={album.id}
+                      slugs={album.slugs}
+                      name={album.title}
                       albumCount={stats.albumCount}
                       photoCount={stats.photoCount}
                       cover={stats.cover}
@@ -59,21 +62,23 @@ export default async function SearchPage({
               </div>
             </section>
           )}
-          {albums.length > 0 && (
+          {nested.length > 0 && (
             <section>
               <h2 className="font-headline-lg text-headline-lg mb-6">Albumok</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter-gallery">
-                {albums.map((album) => (
-                  <AlbumCard
-                    key={album.id}
-                    yearSlug={album.year.slug}
-                    slug={album.slug}
-                    title={album.title}
-                    photoCount={album._count.photos}
-                    cover={album.photos[0]?.thumbPath ?? null}
-                    eventDate={album.eventDate}
-                  />
-                ))}
+                {nested.map((album) => {
+                  const stats = albumStats(album, graph.albums);
+                  return (
+                    <AlbumCard
+                      key={album.id}
+                      slugs={album.slugs}
+                      title={album.title}
+                      photoCount={stats.photoCount}
+                      cover={stats.cover}
+                      eventDate={album.eventDate}
+                    />
+                  );
+                })}
               </div>
             </section>
           )}
