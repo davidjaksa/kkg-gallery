@@ -2,6 +2,7 @@ node_modules
 .next
 .git
 data
+photos
 stitch_scholastic_photo_portal
 *.md
 .env

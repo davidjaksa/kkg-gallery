@@ -32,8 +32,11 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./node_modules/sharp/**/*", "./node_modules/@img/**/*"],
   },
+  // Use "/*" (all routes), not "*". "*" also matches Next's "next-server" trace,
+  // and excludes are applied with picomatch `{ contains: true }`, so "./data/**"
+  // would strip `next/dist/lib/metadata/**` and crash standalone at boot.
   outputFileTracingExcludes: {
-    "*": ["./data/**", "./photos/**"],
+    "/*": ["./data/**", "./photos/**"],
   },
   async redirects() {
     return [
